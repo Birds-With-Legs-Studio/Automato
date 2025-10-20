@@ -1,7 +1,7 @@
 extends Area2D
 
 
-@export var speed = 400 # How fast the player will move (pixels/sec).
+@export var speed = 40 # How fast the player will move (pixels/sec).
 var screen_size # Size of the game window.
 
 func _ready():
@@ -26,7 +26,7 @@ func _process(delta):
 		$AnimatedSprite2D.stop()
 	
 	position += velocity * delta
-	position = position.clamp(Vector2.ZERO, screen_size)
+	#position = position.clamp(Vector2.ZERO, screen_size)
 	
 	if velocity.x != 0 or velocity.y != 0:
 		$AnimatedSprite2D.animation = "walk"
