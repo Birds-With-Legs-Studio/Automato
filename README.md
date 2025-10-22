@@ -36,10 +36,10 @@ Automation game centered around tomatoes. Players grow and harvest tomatoes and 
 
 ## Dev milestones/MVPs
 
-- [ ] Can control a little guy and walk around a field
+- [X] Can control a little guy and walk around a field
   - [x] Little guy
   - [x] Walk around
-  - [ ] Field
+  - [X] Field
 - [ ] Guy can place things on the ground
 - [ ] Guy has inventory and can hold items/place items
 - [ ] Guy can till field with hoe, plant tomato with seed, water plot with can
