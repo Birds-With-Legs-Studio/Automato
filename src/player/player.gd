@@ -8,7 +8,7 @@ var facing
 
 func _ready():
 	screen_size = get_viewport_rect().size
-	environment = get_node("../TileMap/TileMapLayer")
+	environment = get_node("../TileMap/TileMapLayer2")
 	facing = 'd'
 	
 	
@@ -60,6 +60,16 @@ func _process(_delta):
 		
 	#Process player interaction
 	if Input.is_action_pressed("Place"):
-		environment.set_cell(environment.local_to_map(position), 0, Vector2i(1, 1), 0)
+		var facing_vector
+		match facing:
+			'r':
+				facing_vector = Vector2i(1,0)
+			'l':
+				facing_vector = Vector2i(-1,0)
+			'u':
+				facing_vector = Vector2i(0,-1)
+			'd':
+				facing_vector = Vector2i(0,1)
+		environment.set_cell(environment.local_to_map(position) + facing_vector, 0, Vector2(0,0), 0)
 
 	
