@@ -42,9 +42,7 @@ func _process(_delta):
 			facing = 'u'
 			$AnimatedSprite2D.animation = "walk_up"
 			$AnimatedSprite2D.flip_h = false
-		
-		
-		
+			
 		velocity = velocity.normalized() * speed
 		move_and_slide()
 		$AnimatedSprite2D.play()
