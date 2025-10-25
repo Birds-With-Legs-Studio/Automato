@@ -17,26 +17,34 @@ func _process(_delta):
 	velocity = Vector2.ZERO # The player's movement vector.
 	if Input.is_action_pressed("move_right"):
 		velocity.x += 1
-		facing = 'r'
-		$AnimatedSprite2D.animation = "walk_right"
-		$AnimatedSprite2D.flip_h = false
 	if Input.is_action_pressed("move_left"):
 		velocity.x -= 1
-		facing = 'l'
-		$AnimatedSprite2D.animation = "walk_right"
-		$AnimatedSprite2D.flip_h = true
 	if Input.is_action_pressed("move_down"):
 		velocity.y += 1
-		facing = 'd'
-		$AnimatedSprite2D.animation = "walk_down"
-		$AnimatedSprite2D.flip_h = false
 	if Input.is_action_pressed("move_up"):
 		velocity.y -= 1
-		facing = 'u'
-		$AnimatedSprite2D.animation = "walk_up"
-		$AnimatedSprite2D.flip_h = false
 
 	if velocity.length() > 0:
+		#Play a:nimations based on player direction
+		if velocity.x > 0:
+			facing = 'r'
+			$AnimatedSprite2D.animation = "walk_right"
+			$AnimatedSprite2D.flip_h = false
+		elif velocity.x < 0:
+			facing = 'l'
+			$AnimatedSprite2D.animation = "walk_right"
+			$AnimatedSprite2D.flip_h = true
+		elif velocity.y > 0:
+			facing = 'd'
+			$AnimatedSprite2D.animation = "walk_down"
+			$AnimatedSprite2D.flip_h = false
+		else:
+			facing = 'u'
+			$AnimatedSprite2D.animation = "walk_up"
+			$AnimatedSprite2D.flip_h = false
+		
+		
+		
 		velocity = velocity.normalized() * speed
 		move_and_slide()
 		$AnimatedSprite2D.play()
