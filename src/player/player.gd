@@ -4,89 +4,74 @@ extends CharacterBody2D
 @export var speed = 40 # How fast the player will move (pixels/sec).
 var screen_size # Size of the game window.
 var environment
-var facing
+#0 = left, 1 = up, 2 = right, 3 = down
+#TODO: There's GOT to be a better way to do thi
+var direction : int
+
 
 func _ready():
 	screen_size = get_viewport_rect().size
 	environment = get_node("../TileMap/TileMapLayer2")
-	facing = 'd'
-	
+	direction = 3
 
-#Process player movement
+
+# Process player movement
 func _physics_process(_delta):
-	velocity = Vector2.ZERO # The player's movement vector.
-	if Input.is_action_pressed("move_right"):
-		velocity.x += 1
-	if Input.is_action_pressed("move_left"):
-		velocity.x -= 1
-	if Input.is_action_pressed("move_down"):
-		velocity.y += 1
-	if Input.is_action_pressed("move_up"):
-		velocity.y -= 1
-
+	# Get player's movement vector from input
+	velocity = Input.get_vector("left", "right", "up", "down")
+	
+	# Determine player direction based on movement
+	if velocity.x != 0:
+		direction = velocity.x + 1
+	elif velocity.y != 0:
+		direction = velocity.y + 2
+	
+	# Set velocity to normalized vector and move player
+	velocity = velocity.normalized() * speed
+	move_and_slide()
+	
+	# Play animations
+	# TODO: Should this go somewhere else?
 	if velocity.length() > 0:
-		#Play a:nimations based on player direction
-		if velocity.x > 0:
-			facing = 'r'
-			$AnimatedSprite2D.animation = "walk_right"
-			$AnimatedSprite2D.flip_h = false
-		elif velocity.x < 0:
-			facing = 'l'
-			$AnimatedSprite2D.animation = "walk_right"
-			$AnimatedSprite2D.flip_h = true
-		elif velocity.y > 0:
-			facing = 'd'
-			$AnimatedSprite2D.animation = "walk_down"
-			$AnimatedSprite2D.flip_h = false
-		else:
-			facing = 'u'
-			$AnimatedSprite2D.animation = "walk_up"
-			$AnimatedSprite2D.flip_h = false
-			
-		velocity = velocity.normalized() * speed
-		move_and_slide()
+		match direction:
+			0: 
+				$AnimatedSprite2D.animation = "walk_right"
+			1:
+				$AnimatedSprite2D.animation = "walk_up"
+			2:
+				$AnimatedSprite2D.animation = "walk_right"
+			3:
+				$AnimatedSprite2D.animation = "walk_down"
 		$AnimatedSprite2D.play()
-
 	else:
-		match facing:
-			'r':
+		match direction:
+			0: 
 				$AnimatedSprite2D.animation = "stand_right"
-				$AnimatedSprite2D.flip_h = false
-			'l':
-				$AnimatedSprite2D.animation = "stand_right"
-				$AnimatedSprite2D.flip_h = true
-			'u':
+			1:
 				$AnimatedSprite2D.animation = "stand_up"
-				$AnimatedSprite2D.flip_h = false
-			'd':
+			2:
+				$AnimatedSprite2D.animation = "stand_right"
+			3:
 				$AnimatedSprite2D.animation = "stand_down"
-				$AnimatedSprite2D.flip_h = false
 		$AnimatedSprite2D.stop()
+	# Flip_h is true only if player is facing left
+	$AnimatedSprite2D.flip_h = direction == 0
+
 
 #Process mouse presses
 func _input(event):
 	if event.is_action_pressed("Left Interact"):
-		var facing_vector
-		match facing:
-			'r':
-				facing_vector = Vector2i(1,0)
-			'l':
-				facing_vector = Vector2i(-1,0)
-			'u':
-				facing_vector = Vector2i(0,-1)
-			'd':
-				facing_vector = Vector2i(0,1)
-		environment.set_cell(environment.local_to_map(position) + facing_vector, 0, Vector2(0,0), 0)
+		var place_vector = environment.local_to_map(position)
+		if direction % 2 == 0:
+			place_vector += Vector2i(direction - 1, 0)
+		else:
+			place_vector += Vector2i(0, direction - 2)
+		environment.set_cell(place_vector, 0, Vector2(0,0), 0)
 		
 	if event.is_action_pressed("Right Interact"):
-		var facing_vector
-		match facing:
-			'r':
-				facing_vector = Vector2i(1,0)
-			'l':
-				facing_vector = Vector2i(-1,0)
-			'u':
-				facing_vector = Vector2i(0,-1)
-			'd':
-				facing_vector = Vector2i(0,1)
-		environment.set_cell(environment.local_to_map(position) + facing_vector, 0, Vector2(0,1), 0)
+		var place_vector = environment.local_to_map(position)
+		if direction % 2 == 0:
+			place_vector += Vector2i(direction - 1, 0)
+		else:
+			place_vector += Vector2i(0, direction - 2)
+		environment.set_cell(place_vector, 0, Vector2(0,1), 0)
