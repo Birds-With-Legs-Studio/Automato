@@ -60,18 +60,14 @@ func _physics_process(_delta):
 
 #Process mouse presses
 func _input(event):
-	if event.is_action_pressed("Left Interact"):
+	#If it's a mouse event
+	if event is InputEventMouseButton and event.pressed:
 		var place_vector = environment.local_to_map(position)
 		if direction % 2 == 0:
 			place_vector += Vector2i(direction - 1, 0)
 		else:
 			place_vector += Vector2i(0, direction - 2)
-		environment.set_cell(place_vector, 0, Vector2(0,0), 0)
-		
-	if event.is_action_pressed("Right Interact"):
-		var place_vector = environment.local_to_map(position)
-		if direction % 2 == 0:
-			place_vector += Vector2i(direction - 1, 0)
-		else:
-			place_vector += Vector2i(0, direction - 2)
-		environment.set_cell(place_vector, 0, Vector2(0,1), 0)
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			environment.set_cell(place_vector, 0, Vector2(0,0), 0)
+		if event.button_index == MOUSE_BUTTON_RIGHT:
+			environment.set_cell(place_vector, 0, Vector2(0,1), 0)
