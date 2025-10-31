@@ -65,7 +65,7 @@ func _process(_delta):
 	
 		
 	#Process player interaction
-	if Input.is_action_pressed("Place"):
+	if Input.is_action_pressed("Left Interact"):
 		var facing_vector
 		match facing:
 			'r':
@@ -77,5 +77,18 @@ func _process(_delta):
 			'd':
 				facing_vector = Vector2i(0,1)
 		environment.set_cell(environment.local_to_map(position) + facing_vector, 0, Vector2(0,0), 0)
+		
+	if Input.is_action_pressed("Right Interact"):
+		var facing_vector
+		match facing:
+			'r':
+				facing_vector = Vector2i(1,0)
+			'l':
+				facing_vector = Vector2i(-1,0)
+			'u':
+				facing_vector = Vector2i(0,-1)
+			'd':
+				facing_vector = Vector2i(0,1)
+		environment.set_cell(environment.local_to_map(position) + facing_vector, 0, Vector2(0,1), 0)
 
 	
