@@ -17,19 +17,21 @@ signal slot_hovered(which: InventorySlot, is_hovering:bool)
 
 func _ready():
 	add_to_group("inventory_slots")
+	process_mode = Node.PROCESS_MODE_ALWAYS
 
-# When slot is pressed
-func _on_texture_button_gui_input(event):
+func _on_texture_button_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			slot_input.emit(self, InventorySlotAction.SELECT)
 		elif event.button_index == MOUSE_BUTTON_RIGHT:
 			slot_input.emit(self, InventorySlotAction.SPLIT)
 
-func _on_texture_mouse_entered():
+
+func _on_texture_button_mouse_entered() -> void:
 	slot_hovered.emit(self, true)
 
-func _on_texture_button_mouse_exited():
+
+func _on_texture_button_mouse_exited() -> void:
 	slot_hovered.emit(self, false)
 
 # TODO remove if unused

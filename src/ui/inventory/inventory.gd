@@ -15,6 +15,8 @@ var slots: Array[InventorySlot]
 
 static var selected_item: Item = null
 
+var rock = preload("res://src/items/rock.tscn")
+
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	
@@ -36,7 +38,7 @@ func _process(_delta):
 		selected_item.global_position = get_global_mouse_position()
 	
 	# Pause the game if inventory is visible
-	#get_tree().paused = self.visible
+	get_tree().paused = self.visible
 
 func _on_slot_input(which: InventorySlot, action: InventorySlot.InventorySlotAction):
 	print(action)
@@ -47,16 +49,25 @@ func _on_slot_input(which: InventorySlot, action: InventorySlot.InventorySlotAct
 			selected_item = which.select_item()
 		elif action == InventorySlot.InventorySlotAction.SPLIT:
 			selected_item = which.split_item()
-		else:
-			selected_item = which.deselect_item(selected_item)
+	else:
+		selected_item = which.deselect_item(selected_item)
 
 func _on_slot_hovered(which: InventorySlot, is_hovering: bool):
 	if which.item:
 		tooltip.set_text(which.item.item_name)
 		tooltip.visible = is_hovering
 
-# API::
+# UI Input events
+func _input(event):
+	# Process UI events
+	if event.is_action_pressed("ui_inventory"):
+		visible = not visible
+	if event.is_action_pressed("ui_close"):
+		hide()
+	if event.is_action_pressed("gimme_rock"):
+		self.add_item(rock.instantiate(), 1)
 
+# API::
 
 # !DESTRUCTUVE (removes item itself from world  and adds its copy to inventory)
 # Calling this func impies that item is not already in inventory
