@@ -1,12 +1,13 @@
-[gd_scene load_steps=20 format=4 uid="uid://doichuijngdj4"]
+[gd_scene load_steps=21 format=4 uid="uid://doichuijngdj4"]
 
-[ext_resource type="Texture2D" uid="uid://bdryfs036txr0" path="res://assets/tiles/tileset.png" id="1_244u8"]
-[ext_resource type="Script" uid="uid://dfqpojrn7mpok" path="res://src/player/player.gd" id="1_mf2ua"]
-[ext_resource type="Texture2D" uid="uid://ba8hbc0s0rdh0" path="res://assets/tiles/rock.png" id="2_244u8"]
-[ext_resource type="Texture2D" uid="uid://dxo36xxi40s7b" path="res://assets/player/robin.png" id="3_mf2ua"]
+[ext_resource type="Texture2D" uid="uid://bdryfs036txr0" path="res://assets/tiles/tileset.png" id="1_u431l"]
+[ext_resource type="Texture2D" uid="uid://ba8hbc0s0rdh0" path="res://assets/tiles/rock.png" id="2_rtqb0"]
+[ext_resource type="Script" uid="uid://dfqpojrn7mpok" path="res://src/player/player.gd" id="3_qe5qu"]
+[ext_resource type="Texture2D" uid="uid://dxo36xxi40s7b" path="res://assets/player/robin.png" id="4_um3dd"]
+[ext_resource type="PackedScene" uid="uid://cy388q6sdbj5b" path="res://src/ui/inventory/inventory.tscn" id="5_ef8f5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5f2sf"]
-texture = ExtResource("1_244u8")
+texture = ExtResource("1_u431l")
 0:0/0 = 0
 1:0/0 = 0
 0:1/0 = 0
@@ -17,7 +18,7 @@ physics_layer_0/collision_layer = 1
 sources/1 = SubResource("TileSetAtlasSource_5f2sf")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jiejy"]
-texture = ExtResource("2_244u8")
+texture = ExtResource("2_rtqb0")
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -8, -8, -4, -8, 4, -4, 8, 4, 8, 8, 4, 8, -4, 4, -8)
 
@@ -26,39 +27,39 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_jiejy")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_244u8"]
-atlas = ExtResource("3_mf2ua")
+atlas = ExtResource("4_um3dd")
 region = Rect2(0, 0, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5f2sf"]
-atlas = ExtResource("3_mf2ua")
+atlas = ExtResource("4_um3dd")
 region = Rect2(96, 0, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jiejy"]
-atlas = ExtResource("3_mf2ua")
+atlas = ExtResource("4_um3dd")
 region = Rect2(48, 0, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o822w"]
-atlas = ExtResource("3_mf2ua")
+atlas = ExtResource("4_um3dd")
 region = Rect2(16, 0, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x42xx"]
-atlas = ExtResource("3_mf2ua")
+atlas = ExtResource("4_um3dd")
 region = Rect2(32, 0, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l271a"]
-atlas = ExtResource("3_mf2ua")
+atlas = ExtResource("4_um3dd")
 region = Rect2(112, 0, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8ydov"]
-atlas = ExtResource("3_mf2ua")
+atlas = ExtResource("4_um3dd")
 region = Rect2(128, 0, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ylhto"]
-atlas = ExtResource("3_mf2ua")
+atlas = ExtResource("4_um3dd")
 region = Rect2(64, 0, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cwolq"]
-atlas = ExtResource("3_mf2ua")
+atlas = ExtResource("4_um3dd")
 region = Rect2(80, 0, 16, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hqtel"]
@@ -154,8 +155,9 @@ tile_set = SubResource("TileSet_jiejy")
 [node name="TileMapLayer2" type="TileMapLayer" parent="TileMap"]
 tile_set = SubResource("TileSet_o822w")
 
-[node name="Player" type="CharacterBody2D" parent="."]
-script = ExtResource("1_mf2ua")
+[node name="Player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("inventory")]
+script = ExtResource("3_qe5qu")
+inventory = NodePath("../UI/CenterContainer/Inventory")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
@@ -172,3 +174,22 @@ position = Vector2(0, -1)
 offset = Vector2(0, -15)
 zoom = Vector2(5, 5)
 position_smoothing_enabled = true
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="CenterContainer" type="CenterContainer" parent="UI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -232.0
+offset_top = -112.0
+offset_right = -232.0
+offset_bottom = -112.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(4, 4)
+
+[node name="Inventory" parent="UI/CenterContainer" instance=ExtResource("5_ef8f5")]
+layout_mode = 2

@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cky1oituxihsf"]
+
+[ext_resource type="Script" uid="uid://bde48hcskp4mo" path="res://src/items/item.gd" id="1_brgee"]
+[ext_resource type="Texture2D" uid="uid://c523dxhacrwi7" path="res://assets/items/rockitem.png" id="2_lvatv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ed1vi"]
+
+[node name="Rock" type="Area2D"]
+script = ExtResource("1_brgee")
+item_name = "Rock"
+icon = ExtResource("2_lvatv")
+is_stackable = true
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_lvatv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ed1vi")

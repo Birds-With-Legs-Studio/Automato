@@ -5,6 +5,8 @@ extends CharacterBody2D
 var screen_size # Size of the game window.
 var environment
 var camera
+@export var inventory: Inventory
+var rock = preload("res://src/items/rock.tscn")
 #0 = left, 1 = up, 2 = right, 3 = down
 #TODO: There's GOT to be a better way to do thi
 var direction : int
@@ -86,6 +88,20 @@ func _input(event):
 		
 		# Left button = place, right button = destroy
 		if event.button_index == MOUSE_BUTTON_LEFT:
-			environment.set_cell(place_vector, 0, Vector2(0,0), 0)
+			var item_to_place = inventory.retrieve_item("Rock")
+			if item_to_place:
+				environment.set_cell(place_vector, 0, Vector2(0,0), 0)
 		if event.button_index == MOUSE_BUTTON_RIGHT:
-			environment.set_cell(place_vector, 0, Vector2(0,1), 0)
+			var item_to_pickup = environment.get_cell_tile_data(place_vector)
+			if item_to_pickup:
+				inventory.add_item(rock.instantiate(), 1)
+				environment.set_cell(place_vector, 0, Vector2(0,1), 0)
+
+	# Process UI events
+	if event.is_action_pressed("ui_inventory"):
+		inventory.visible = not inventory.visible
+	if event.is_action_pressed("ui_close"):
+		inventory.visible = false
+	if event.is_action_pressed("gimme_rock"):
+		inventory.add_item(rock.instantiate(), 1)
+		print(inventory.all_items())

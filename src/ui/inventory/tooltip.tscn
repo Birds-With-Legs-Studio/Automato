@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://di4phixxnaq0c"]
+
+[ext_resource type="Script" uid="uid://dmap83l6hppee" path="res://src/ui/inventory/tooltip.gd" id="1_7hvit"]
+
+[node name="Tooltip" type="ColorRect"]
+visible = false
+offset_right = 60.0
+offset_bottom = 20.0
+color = Color(0.1148968, 0.11489681, 0.1148968, 1)
+script = ExtResource("1_7hvit")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="MarginContainer"]
+layout_mode = 2
