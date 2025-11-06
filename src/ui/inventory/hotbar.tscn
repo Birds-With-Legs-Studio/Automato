@@ -1,0 +1,109 @@
+[gd_scene load_steps=4 format=3 uid="uid://ch8qaa4nnugxj"]
+
+[ext_resource type="Script" uid="uid://bedg5v6ejkg2r" path="res://src/ui/inventory/hotbar.gd" id="1_aug23"]
+[ext_resource type="Texture2D" uid="uid://df53b61qcnq2e" path="res://assets/items/itemframe.png" id="2_ybbke"]
+[ext_resource type="Texture2D" uid="uid://baxccn6s5as8p" path="res://assets/items/itemframe_selected.png" id="3_yv820"]
+
+[node name="Hotbar" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_aug23")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(4, 4)
+columns = 10
+
+[node name="CenterContainer0" type="CenterContainer" parent="GridContainer"]
+layout_mode = 2
+
+[node name="TextureButton" type="TextureButton" parent="GridContainer/CenterContainer0"]
+layout_mode = 2
+texture_normal = ExtResource("2_ybbke")
+texture_pressed = ExtResource("3_yv820")
+
+[node name="CenterContainer1" type="CenterContainer" parent="GridContainer"]
+layout_mode = 2
+
+[node name="TextureButton" type="TextureButton" parent="GridContainer/CenterContainer1"]
+layout_mode = 2
+texture_normal = ExtResource("2_ybbke")
+texture_pressed = ExtResource("3_yv820")
+
+[node name="CenterContainer2" type="CenterContainer" parent="GridContainer"]
+layout_mode = 2
+
+[node name="TextureButton" type="TextureButton" parent="GridContainer/CenterContainer2"]
+layout_mode = 2
+texture_normal = ExtResource("2_ybbke")
+texture_pressed = ExtResource("3_yv820")
+
+[node name="CenterContainer3" type="CenterContainer" parent="GridContainer"]
+layout_mode = 2
+
+[node name="TextureButton" type="TextureButton" parent="GridContainer/CenterContainer3"]
+layout_mode = 2
+texture_normal = ExtResource("2_ybbke")
+texture_pressed = ExtResource("3_yv820")
+
+[node name="CenterContainer4" type="CenterContainer" parent="GridContainer"]
+layout_mode = 2
+
+[node name="TextureButton" type="TextureButton" parent="GridContainer/CenterContainer4"]
+layout_mode = 2
+texture_normal = ExtResource("2_ybbke")
+texture_pressed = ExtResource("3_yv820")
+
+[node name="CenterContainer5" type="CenterContainer" parent="GridContainer"]
+layout_mode = 2
+
+[node name="TextureButton" type="TextureButton" parent="GridContainer/CenterContainer5"]
+layout_mode = 2
+texture_normal = ExtResource("2_ybbke")
+texture_pressed = ExtResource("3_yv820")
+
+[node name="CenterContainer6" type="CenterContainer" parent="GridContainer"]
+layout_mode = 2
+
+[node name="TextureButton" type="TextureButton" parent="GridContainer/CenterContainer6"]
+layout_mode = 2
+texture_normal = ExtResource("2_ybbke")
+texture_pressed = ExtResource("3_yv820")
+
+[node name="CenterContainer7" type="CenterContainer" parent="GridContainer"]
+layout_mode = 2
+
+[node name="TextureButton" type="TextureButton" parent="GridContainer/CenterContainer7"]
+layout_mode = 2
+texture_normal = ExtResource("2_ybbke")
+texture_pressed = ExtResource("3_yv820")
+
+[node name="CenterContainer8" type="CenterContainer" parent="GridContainer"]
+layout_mode = 2
+
+[node name="TextureButton" type="TextureButton" parent="GridContainer/CenterContainer8"]
+layout_mode = 2
+texture_normal = ExtResource("2_ybbke")
+texture_pressed = ExtResource("3_yv820")
+
+[node name="CenterContainer9" type="CenterContainer" parent="GridContainer"]
+layout_mode = 2
+
+[node name="TextureButton" type="TextureButton" parent="GridContainer/CenterContainer9"]
+layout_mode = 2
+texture_normal = ExtResource("2_ybbke")
+texture_pressed = ExtResource("3_yv820")
+
+[connection signal="pressed" from="GridContainer/CenterContainer0/TextureButton" to="." method="_on_texture_button_pressed0"]
+[connection signal="pressed" from="GridContainer/CenterContainer1/TextureButton" to="." method="_on_texture_button_pressed1"]
+[connection signal="pressed" from="GridContainer/CenterContainer2/TextureButton" to="." method="_on_texture_button_pressed2"]
+[connection signal="pressed" from="GridContainer/CenterContainer3/TextureButton" to="." method="_on_texture_button_pressed3"]
+[connection signal="pressed" from="GridContainer/CenterContainer4/TextureButton" to="." method="_on_texture_button_pressed4"]
+[connection signal="pressed" from="GridContainer/CenterContainer5/TextureButton" to="." method="_on_texture_button_pressed5"]
+[connection signal="pressed" from="GridContainer/CenterContainer6/TextureButton" to="." method="_on_texture_button_pressed6"]
+[connection signal="pressed" from="GridContainer/CenterContainer7/TextureButton" to="." method="_on_texture_button_pressed7"]
+[connection signal="pressed" from="GridContainer/CenterContainer8/TextureButton" to="." method="_on_texture_button_pressed8"]
+[connection signal="gui_input" from="GridContainer/CenterContainer9/TextureButton" to="." method="_on_texture_button_gui_input9"]
+[connection signal="pressed" from="GridContainer/CenterContainer9/TextureButton" to="." method="_on_texture_button_pressed9"]

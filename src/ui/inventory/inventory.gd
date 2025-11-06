@@ -24,9 +24,14 @@ func _ready():
 	for i in range(rows * cols):
 		var slot = inventory_slot_scene.instantiate()
 		slots.append(slot)
-		inventory_grid.add_child(slot)
 		slot.slot_input.connect(self._on_slot_input)
 		slot.slot_hovered.connect(self._on_slot_hovered)
+	
+	# Add slots to inventory grid in reverse row order so hotbar is 0-9
+	for i in range(rows):
+		for j in range(cols):
+			inventory_grid.add_child(slots[(rows - i - 1) * cols + j])
+	
 	tooltip.visible = false
 	
 	hide()
@@ -90,19 +95,23 @@ func add_item(item: Item, amount: int) -> void:
 # !DESTRUCTUVE (removes from inventory if retrieved)
 #A function to remove item from inventory and return if it exists
 func retrieve_item(_item_name: String) -> Item:
-	for slot in slots:
-		if slot.item and slot.item.item_name == _item_name:
-			var copy_item := Item.new()
-			copy_item.item_name = slot.item.item_name
-			copy_item.name = copy_item.item_name
-			copy_item.icon = slot.item.icon
-			copy_item.is_stackable = slot.item.is_stackable
-			if slot.item.amount > 1:
-				slot.item.amount -= 1
-			else:
-				slot.remove_item()
-			return copy_item
+	for i in range(slots.size()):
+		if slots[i].item and slots[i].item.item_name == _item_name:
+			return retrieve_index(i)
 	return null
+
+func retrieve_index(_item_index: int) -> Item:
+	var slot = slots[_item_index]
+	var copy_item := Item.new()
+	copy_item.item_name = slot.item.item_name
+	copy_item.name = copy_item.item_name
+	copy_item.icon = slot.item.icon
+	copy_item.is_stackable = slot.item.is_stackable
+	if slot.item.amount > 1:
+		slot.item.amount -= 1
+	else:
+		slot.remove_item()
+	return copy_item
 
 # !NON-DESTRUCTIVE (read-only function) to get all items in inventory
 func all_items() -> Array[Item]:
@@ -130,3 +139,6 @@ func remove_all(_name: String) -> void:
 func clear_inventory() -> void:
 	for slot in slots:
 		slot.remove_item()
+
+func get_hotbar() -> Array[InventorySlot]:
+	return slots.slice(0,10)

@@ -55,13 +55,13 @@ func select_item() -> InventoryItem:
 # If swap, then return swapped item, else return null and add new item
 func deselect_item(new_item: InventoryItem) -> InventoryItem:
 	var inventory = self.get_parent().get_parent() # Inventory
-	if self.is_empty():
+	if self.item == null:
 		new_item.reparent(self)
 		self.item = new_item
 		self.item.z_index = 64
 		return null
 	else:
-		if self.has_same_item(new_item): # if both items are same
+		if new_item.item_name == self.item.item_name: # if both items are same
 			print("Has same item")
 			self.item.amount += new_item.amount
 			new_item.free()
@@ -77,7 +77,7 @@ func deselect_item(new_item: InventoryItem) -> InventoryItem:
 
 # Split means selecting half amount
 func split_item() -> InventoryItem:
-	if self.is_empty():
+	if self.item == null:
 		return null
 	var inventory = self.get_parent().get_parent() # Inventory
 	if self.item.amount > 1:
@@ -96,14 +96,6 @@ func split_item() -> InventoryItem:
 		return self.select_item()
 	else:
 		return null
-
-# Is slot empty
-func is_empty():
-	return self.item == null
-
-# Has same kind of item?
-func has_same_item(_item: InventoryItem):
-	return _item.item_name == self.item.item_name
 
 func update_slot():
 	if item:

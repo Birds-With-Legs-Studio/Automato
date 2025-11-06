@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://dfqpojrn7mpok" path="res://src/player/player.gd" id="3_qe5qu"]
 [ext_resource type="Texture2D" uid="uid://dxo36xxi40s7b" path="res://assets/player/robin.png" id="4_um3dd"]
 [ext_resource type="PackedScene" uid="uid://cy388q6sdbj5b" path="res://src/ui/inventory/inventory.tscn" id="5_ef8f5"]
-[ext_resource type="PackedScene" uid="uid://ch8qaa4nnugxj" path="res://src/ui/inventory/hotbar.tscn" id="6_rtqb0"]
+[ext_resource type="Script" uid="uid://bedg5v6ejkg2r" path="res://src/ui/inventory/hotbar.gd" id="6_rtqb0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5f2sf"]
 texture = ExtResource("1_u431l")
@@ -158,7 +158,7 @@ tile_set = SubResource("TileSet_o822w")
 
 [node name="Player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("inventory")]
 script = ExtResource("3_qe5qu")
-inventory = NodePath("../UI/InventoryContainer/Inventory")
+inventory = NodePath("../UI/CenterContainer/Inventory")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
@@ -178,7 +178,7 @@ position_smoothing_enabled = true
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="InventoryContainer" type="CenterContainer" parent="UI"]
+[node name="CenterContainer" type="CenterContainer" parent="UI"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -192,22 +192,46 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(4, 4)
 
-[node name="Inventory" parent="UI/InventoryContainer" instance=ExtResource("5_ef8f5")]
+[node name="Inventory" parent="UI/CenterContainer" instance=ExtResource("5_ef8f5")]
 layout_mode = 2
+rows = null
+cols = null
 
 [node name="HotbarContainer" type="CenterContainer" parent="UI"]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -160.0
-offset_top = -180.0
-offset_right = -120.0
-offset_bottom = -140.0
-grow_horizontal = 2
-grow_vertical = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("6_rtqb0")
 
-[node name="Hotbar" parent="UI/HotbarContainer" node_paths=PackedStringArray("inventory_scene") instance=ExtResource("6_rtqb0")]
+[node name="Hotbar" type="GridContainer" parent="UI/HotbarContainer"]
 layout_mode = 2
-inventory_scene = NodePath("../../InventoryContainer/Inventory")
+columns = 10
+
+[node name="TextureButton" type="TextureButton" parent="UI/HotbarContainer/Hotbar"]
+layout_mode = 2
+
+[node name="TextureButton2" type="TextureButton" parent="UI/HotbarContainer/Hotbar"]
+layout_mode = 2
+
+[node name="TextureButton3" type="TextureButton" parent="UI/HotbarContainer/Hotbar"]
+layout_mode = 2
+
+[node name="TextureButton4" type="TextureButton" parent="UI/HotbarContainer/Hotbar"]
+layout_mode = 2
+
+[node name="TextureButton5" type="TextureButton" parent="UI/HotbarContainer/Hotbar"]
+layout_mode = 2
+
+[node name="TextureButton6" type="TextureButton" parent="UI/HotbarContainer/Hotbar"]
+layout_mode = 2
+
+[node name="TextureButton7" type="TextureButton" parent="UI/HotbarContainer/Hotbar"]
+layout_mode = 2
+
+[node name="TextureButton8" type="TextureButton" parent="UI/HotbarContainer/Hotbar"]
+layout_mode = 2
+
+[node name="TextureButton9" type="TextureButton" parent="UI/HotbarContainer/Hotbar"]
+layout_mode = 2
+
+[node name="TextureButton10" type="TextureButton" parent="UI/HotbarContainer/Hotbar"]
+layout_mode = 2
