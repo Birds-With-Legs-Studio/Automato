@@ -6,6 +6,7 @@ var screen_size # Size of the game window.
 var environment
 var camera
 @export var inventory: Inventory
+@export var hotbar: Hotbar
 var rock = preload("res://src/items/rock.tscn")
 #0 = left, 1 = up, 2 = right, 3 = down
 #TODO: There's GOT to be a better way to do thi
@@ -89,9 +90,11 @@ func _input(event):
 		# Left button = place, right button = destroy
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if not environment.get_cell_tile_data(place_vector):
-				if inventory.retrieve_item("Rock"):
+				if inventory.retrieve_index(hotbar.selected):
 					environment.set_cell(place_vector, 0, Vector2(0,0), 0)
+					hotbar.update()
 		if event.button_index == MOUSE_BUTTON_RIGHT:
 			if environment.get_cell_tile_data(place_vector):
 				inventory.add_item(rock.instantiate(), 1)
 				environment.set_cell(place_vector, 0, Vector2(0,1), 0)
+				hotbar.update()

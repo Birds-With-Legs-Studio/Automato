@@ -156,9 +156,10 @@ tile_set = SubResource("TileSet_jiejy")
 [node name="TileMapLayer2" type="TileMapLayer" parent="TileMap"]
 tile_set = SubResource("TileSet_o822w")
 
-[node name="Player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("inventory")]
+[node name="Player" type="CharacterBody2D" parent="." node_paths=PackedStringArray("inventory", "hotbar")]
 script = ExtResource("3_qe5qu")
 inventory = NodePath("../UI/InventoryContainer/Inventory")
+hotbar = NodePath("../UI/HotbarContainer/Hotbar")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
@@ -192,8 +193,9 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(4, 4)
 
-[node name="Inventory" parent="UI/InventoryContainer" instance=ExtResource("5_ef8f5")]
+[node name="Inventory" parent="UI/InventoryContainer" node_paths=PackedStringArray("hotbar_scene") instance=ExtResource("5_ef8f5")]
 layout_mode = 2
+hotbar_scene = NodePath("../../HotbarContainer/Hotbar")
 
 [node name="HotbarContainer" type="CenterContainer" parent="UI"]
 anchors_preset = 7
@@ -208,6 +210,6 @@ offset_bottom = -140.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="Hotbar" parent="UI/HotbarContainer" node_paths=PackedStringArray("inventory_scene") instance=ExtResource("6_rtqb0")]
+[node name="Hotbar" parent="UI/HotbarContainer" node_paths=PackedStringArray("inventory") instance=ExtResource("6_rtqb0")]
 layout_mode = 2
-inventory_scene = NodePath("../../InventoryContainer/Inventory")
+inventory = NodePath("../../InventoryContainer/Inventory")

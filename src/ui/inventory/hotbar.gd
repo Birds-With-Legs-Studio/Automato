@@ -4,7 +4,7 @@ class_name Hotbar
 var slots: Array[CenterContainer]
 
 var inventory_item_scene = preload("res://src/ui/inventory/inventory_item.tscn")
-@export var inventory_scene: Inventory
+@export var inventory: Inventory
 
 @export var cols: int = 10
 
@@ -20,14 +20,23 @@ func _ready():
 	select_slot(0)
 	slots[0].get_child(0).button_pressed = true
 	
-	update_hotbar()
+	update()
 
 func _process(_delta):
-	self.visible = not inventory_scene.visible
+	self.visible = not inventory.visible
 
-func update_hotbar() -> void:
-	print()
-	#slots = inventory_scene.get_hotbar()
+func update() -> void:
+	var hotbar_items: Array[Item] = inventory.get_hotbar()
+	for i in range(slots.size()):
+		if slots[i].get_child_count() > 1:
+			if slots[i].get_child(1) != hotbar_items[i]:
+				slots[i].get_child(1).free()
+				if hotbar_items[i] != null:
+					slots[i].add_child((hotbar_items[i].duplicate()))
+			
+		else:
+			if hotbar_items[i] != null:
+				slots[i].add_child((hotbar_items[i].duplicate()))
 
 func select_slot(i: int) -> void:
 	slots[selected].get_child(0).button_pressed = false

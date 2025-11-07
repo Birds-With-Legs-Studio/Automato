@@ -4,11 +4,14 @@ class_name Inventory
 var inventory_item_scene = preload("res://src/ui/inventory/inventory_item.tscn")
 
 @export var rows: int = 3
-@export var cols: int = 6
+@export var cols: int = 9
 
 @export var inventory_grid: GridContainer
 
 @export var inventory_slot_scene: PackedScene
+
+@export var hotbar_scene: Hotbar
+
 var slots: Array[InventorySlot]
 
 @export var tooltip: Tooltip # Must be shared among all instances
@@ -71,6 +74,7 @@ func _input(event):
 		hide()
 	if event.is_action_pressed("gimme_rock"):
 		self.add_item(rock.instantiate(), 1)
+		
 
 # API::
 
@@ -84,11 +88,13 @@ func add_item(item: Item, amount: int) -> void:
 		for slot in slots:
 			if slot.item and slot.item.item_name == _item.item_name:
 				slot.item.amount += _item.amount
+				hotbar_scene.update()
 				return
 	for slot in slots:
 		if slot.item == null:
 			slot.item = _item
 			slot.update_slot()
+			hotbar_scene.update()
 			return
 
 
@@ -101,6 +107,8 @@ func retrieve_item(_item_name: String) -> Item:
 	return null
 
 func retrieve_index(_item_index: int) -> Item:
+	if slots[_item_index].get_child_count() == 1:
+		return null
 	var slot = slots[_item_index]
 	var copy_item := Item.new()
 	copy_item.item_name = slot.item.item_name
@@ -111,6 +119,7 @@ func retrieve_index(_item_index: int) -> Item:
 		slot.item.amount -= 1
 	else:
 		slot.remove_item()
+	hotbar_scene.update()
 	return copy_item
 
 # !NON-DESTRUCTIVE (read-only function) to get all items in inventory
@@ -140,5 +149,11 @@ func clear_inventory() -> void:
 	for slot in slots:
 		slot.remove_item()
 
-func get_hotbar() -> Array[InventorySlot]:
-	return slots.slice(0,10)
+func get_hotbar() -> Array[Item]:
+	var hotbar: Array[Item]
+	for i in range(10):
+		if(slots[i].get_child_count() > 1):
+			hotbar.append(slots[i].get_child(1))
+		else:
+			hotbar.append(null)
+	return hotbar
