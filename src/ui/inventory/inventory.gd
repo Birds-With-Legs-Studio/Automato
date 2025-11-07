@@ -69,8 +69,10 @@ func _on_slot_hovered(which: InventorySlot, is_hovering: bool):
 func _input(event):
 	# Process UI events
 	if event.is_action_pressed("ui_inventory"):
+		hotbar_scene.update()
 		visible = not visible
 	if event.is_action_pressed("ui_close"):
+		hotbar_scene.update()
 		hide()
 	if event.is_action_pressed("gimme_rock"):
 		self.add_item(rock.instantiate(), 1)
