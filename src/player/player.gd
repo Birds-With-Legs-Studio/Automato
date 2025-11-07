@@ -96,5 +96,5 @@ func _input(event):
 		if event.button_index == MOUSE_BUTTON_RIGHT:
 			if environment.get_cell_tile_data(place_vector):
 				inventory.add_item(rock.instantiate(), 1)
-				environment.set_cell(place_vector, 0, Vector2(0,1), 0)
+				environment.set_cell(place_vector, -1, Vector2(0,1), 0)
 				hotbar.update()
