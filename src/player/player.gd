@@ -34,12 +34,15 @@ func _physics_process(_delta):
 	
 	# Determine player direction based on movement (prefer horizontal)
 	if velocity.x != 0:
-		@warning_ignore("narrowing_conversion")
-		direction = velocity.x + 1
+		if velocity.x < 0:
+			direction = 0
+		else:
+			direction = 2
+		#TODO For some reason, this doesn't work???:
+		#direction = velocity.x + 1
 	elif velocity.y != 0:
-		@warning_ignore("narrowing_conversion")
-		direction = velocity.y + 2
-	
+		direction = int(velocity.y + 2)
+
 	# Set velocity to normalized vector and move player
 	velocity = velocity.normalized() * speed
 	move_and_slide()
