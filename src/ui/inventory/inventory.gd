@@ -19,6 +19,7 @@ var slots: Array[InventorySlot]
 static var selected_item: Item = null
 
 var rock = preload("res://src/items/rock.tscn")
+var seeds = preload("res://src/items/seeds.tscn")
 
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -36,6 +37,10 @@ func _ready():
 			inventory_grid.add_child(slots[(rows - i - 1) * cols + j])
 	
 	tooltip.visible = false
+	
+	#Give player hoe and watering can
+	self.add_item(preload("res://src/items/hoe.tscn").instantiate(), 1)
+	self.add_item(preload("res://src/items/watering_can.tscn").instantiate(), 1)
 	
 	hide()
 
@@ -76,9 +81,16 @@ func _input(event):
 		hide()
 	if event.is_action_pressed("gimme_rock"):
 		self.add_item(rock.instantiate(), 1)
-		
+	if event.is_action_pressed("gimme_seeds"):
+		self.add_item(seeds.instantiate(), 1)
 
 # API::
+
+# !NONDESCRUCTIVE
+func get_item_name(index: int) -> String:
+	if slots[index].item == null:
+		return ""
+	return(slots[index].item.name)
 
 # !DESTRUCTUVE (removes item itself from world  and adds its copy to inventory)
 # Calling this func impies that item is not already in inventory

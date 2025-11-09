@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ba8hbc0s0rdh0"
-path="res://.godot/imported/rock.png-6feac9080a54485460d6bd1f168f0ab9.ctex"
+uid="uid://bxgbrhro7ur7t"
+path="res://.godot/imported/wateringcan.png-7c34d7e8d18e6a6f8e7e67e7ac4a9ca6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tiles/rock.png"
-dest_files=["res://.godot/imported/rock.png-6feac9080a54485460d6bd1f168f0ab9.ctex"]
+source_file="res://assets/items/wateringcan.png"
+dest_files=["res://.godot/imported/wateringcan.png-7c34d7e8d18e6a6f8e7e67e7ac4a9ca6.ctex"]
 
 [params]
 

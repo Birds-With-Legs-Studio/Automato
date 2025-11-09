@@ -23,7 +23,7 @@ func _process(_delta):
 	else:
 		label.visible = false
 
-func set_sprite_size_to(sprite: Sprite2D, size: Vector2):
-	var texture_size = sprite.texture.get_size()
+func set_sprite_size_to(item_sprite: Sprite2D, size: Vector2):
+	var texture_size = item_sprite.texture.get_size()
 	var scale_factor = size / texture_size / 8
 	self.scale = scale_factor

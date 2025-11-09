@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://h1vwjwduq6w5"]
+
+[ext_resource type="Script" uid="uid://bde48hcskp4mo" path="res://src/items/item.gd" id="1_yhvt5"]
+[ext_resource type="Texture2D" uid="uid://bdxopxv6uyvrp" path="res://assets/items/hoe.png" id="2_yhvt5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ed1vi"]
+
+[node name="Rock" type="Area2D"]
+script = ExtResource("1_yhvt5")
+item_name = "Hoe"
+icon = ExtResource("2_yhvt5")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_yhvt5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ed1vi")
