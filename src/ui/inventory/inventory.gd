@@ -54,7 +54,6 @@ func _process(_delta):
 	get_tree().paused = self.visible
 
 func _on_slot_input(which: InventorySlot, action: InventorySlot.InventorySlotAction):
-	print(action)
 	# Select/deselect items
 	if not selected_item:
 		# Splitting only occurs if ite not selected already

@@ -62,7 +62,6 @@ func deselect_item(new_item: InventoryItem) -> InventoryItem:
 		return null
 	else:
 		if new_item.item_name == self.item.item_name: # if both items are same
-			print("Has same item")
 			self.item.amount += new_item.amount
 			new_item.free()
 			return null

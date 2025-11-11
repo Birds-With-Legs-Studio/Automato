@@ -23,4 +23,5 @@ theme_override_constants/v_separation = 0
 columns = 9
 
 [node name="Tooltip" parent="." instance=ExtResource("2_1deq4")]
+z_index = 256
 layout_mode = 0
