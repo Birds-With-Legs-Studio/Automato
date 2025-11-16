@@ -15,7 +15,7 @@ enum InventorySlotAction {
 signal slot_input(which: InventorySlot, action: InventorySlotAction)
 signal slot_hovered(which: InventorySlot, is_hovering:bool)
 
-func _ready():
+func _ready() -> void:
 	add_to_group("inventory_slots")
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
@@ -35,7 +35,7 @@ func _on_texture_button_mouse_exited() -> void:
 	slot_hovered.emit(self, false)
 
 # TODO remove if unused
-func remove_item():
+func remove_item() -> void:
 	self.remove_child(item)
 	item.free()
 	item = null
@@ -43,7 +43,7 @@ func remove_item():
 
 # Removes item from slot and returns it
 func select_item() -> InventoryItem:
-	var inventory = self.get_parent().get_parent() # Inventory
+	var inventory: Inventory = self.get_parent().get_parent() # Inventory
 	var tmp_item := self.item
 	if tmp_item:
 		tmp_item.reparent(inventory)
@@ -54,7 +54,7 @@ func select_item() -> InventoryItem:
 
 # If swap, then return swapped item, else return null and add new item
 func deselect_item(new_item: InventoryItem) -> InventoryItem:
-	var inventory = self.get_parent().get_parent() # Inventory
+	var inventory: Inventory = self.get_parent().get_parent() # Inventory
 	if self.item == null:
 		new_item.reparent(self)
 		self.item = new_item
@@ -68,7 +68,7 @@ func deselect_item(new_item: InventoryItem) -> InventoryItem:
 		else: #if different type, swap
 			new_item.reparent(self) # Make new thing our child
 			self.item.reparent(inventory) # Make old thing inventory's child
-			var tmp_item = self.item
+			var tmp_item: = self.item
 			self.item = new_item
 			new_item.z_index = 64 # Reset its z index????
 			tmp_item.z_index = 128 # Update swapped item's z index
@@ -78,7 +78,7 @@ func deselect_item(new_item: InventoryItem) -> InventoryItem:
 func split_item() -> InventoryItem:
 	if self.item == null:
 		return null
-	var inventory = self.get_parent().get_parent() # Inventory
+	var inventory: Inventory = self.get_parent().get_parent() # Inventory
 	if self.item.amount > 1:
 		var new_item: InventoryItem = inventory_item_scene.instantiate()
 		new_item.set_data(
@@ -96,7 +96,7 @@ func split_item() -> InventoryItem:
 	else:
 		return null
 
-func update_slot():
+func update_slot() -> void:
 	if item:
 		if not self.get_children().has(item):
 			add_child(item)

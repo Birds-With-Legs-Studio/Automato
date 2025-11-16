@@ -3,14 +3,14 @@ class_name Hotbar
 
 var slots: Array[CenterContainer]
 
-var inventory_item_scene = preload("res://src/ui/inventory/inventory_item.tscn")
+var inventory_item_scene: PackedScene = preload("res://src/ui/inventory/inventory_item.tscn")
 @export var inventory: Inventory
 
 @export var cols: int = 10
 
 var selected: int
 
-func _ready():
+func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	
 	for i in range(cols):
@@ -22,7 +22,7 @@ func _ready():
 	
 	update()
 
-func _process(_delta):
+func _process(_delta: float) -> void:
 	self.visible = not inventory.visible
 
 func update() -> void:
@@ -73,7 +73,7 @@ func _on_texture_button_pressed8() -> void:
 func _on_texture_button_pressed9() -> void:
 	select_slot(9)
 
-func _input(event):
+func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 			select_slot((selected - 1) % 9)

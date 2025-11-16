@@ -7,6 +7,6 @@ class_name Item
 @export var icon: Texture2D
 @export var is_stackable: bool = false
 
-func _ready():
+func _ready() -> void:
 	add_to_group("items")
 	self.name = item_name

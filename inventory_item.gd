@@ -8,14 +8,14 @@ class_name InventoryItem
 @export var label: Label
 
 
-func set_data(_name: String, _icon: Texture2D, _is_stackable: bool, _amount: int):
+func set_data(_name: String, _icon: Texture2D, _is_stackable: bool, _amount: int) -> void:
 	self.item_name = _name
 	self.name = _name
 	self.icon = _icon
 	self.is_stackable = _is_stackable
 	self.amount = _amount
 
-func _process(_delta):
+func _process(_delta: float) -> void:
 	self.sprite.texture = self.icon
 	self.set_sprite_size_to(sprite, Vector2(42,42))
 	if is_stackable:
@@ -23,7 +23,7 @@ func _process(_delta):
 	else:
 		label.visible = false
 
-func set_sprite_size_to(item_sprite: Sprite2D, size: Vector2):
-	var texture_size = item_sprite.texture.get_size()
-	var scale_factor = size / texture_size / 8
+func set_sprite_size_to(item_sprite: Sprite2D, size: Vector2) -> void:
+	var texture_size: Vector2 = item_sprite.texture.get_size()
+	var scale_factor: Vector2 = size / texture_size / 8
 	self.scale = scale_factor

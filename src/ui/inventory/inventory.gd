@@ -1,7 +1,7 @@
 extends Control
 class_name Inventory
 
-var inventory_item_scene = preload("res://src/ui/inventory/inventory_item.tscn")
+var inventory_item_scene: PackedScene = preload("res://src/ui/inventory/inventory_item.tscn")
 
 @export var rows: int = 3
 @export var cols: int = 9
@@ -18,15 +18,15 @@ var slots: Array[InventorySlot]
 
 static var selected_item: Item = null
 
-var rock = preload("res://src/items/rock.tscn")
-var seeds = preload("res://src/items/seeds.tscn")
+var rock: PackedScene = preload("res://src/items/rock.tscn")
+var seeds: PackedScene = preload("res://src/items/seeds.tscn")
 
-func _ready():
+func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	
 	inventory_grid.columns = cols
 	for i in range(rows * cols):
-		var slot = inventory_slot_scene.instantiate()
+		var slot: InventorySlot = inventory_slot_scene.instantiate()
 		slots.append(slot)
 		slot.slot_input.connect(self._on_slot_input)
 		slot.slot_hovered.connect(self._on_slot_hovered)
@@ -44,7 +44,7 @@ func _ready():
 	
 	hide()
 
-func _process(_delta):
+func _process(_delta: float) -> void:
 	tooltip.global_position = get_global_mouse_position() + Vector2.ONE * 8
 	if selected_item:
 		tooltip.visible = false
@@ -53,7 +53,7 @@ func _process(_delta):
 	# Pause the game if inventory is visible
 	get_tree().paused = self.visible
 
-func _on_slot_input(which: InventorySlot, action: InventorySlot.InventorySlotAction):
+func _on_slot_input(which: InventorySlot, action: InventorySlot.InventorySlotAction) -> void:
 	# Select/deselect items
 	if not selected_item:
 		# Splitting only occurs if ite not selected already
@@ -64,13 +64,13 @@ func _on_slot_input(which: InventorySlot, action: InventorySlot.InventorySlotAct
 	else:
 		selected_item = which.deselect_item(selected_item)
 
-func _on_slot_hovered(which: InventorySlot, is_hovering: bool):
+func _on_slot_hovered(which: InventorySlot, is_hovering: bool) -> void:
 	if which.item:
 		tooltip.set_text(which.item.item_name)
 		tooltip.visible = is_hovering
 
 # UI Input events
-func _input(event):
+func _input(event: InputEvent) -> void:
 	# Process UI events
 	if event.is_action_pressed("ui_inventory"):
 		hotbar_scene.update()
@@ -122,7 +122,7 @@ func retrieve_item(_item_name: String) -> Item:
 func retrieve_index(_item_index: int) -> Item:
 	if slots[_item_index].get_child_count() == 1:
 		return null
-	var slot = slots[_item_index]
+	var slot: InventorySlot = slots[_item_index]
 	var copy_item := Item.new()
 	copy_item.item_name = slot.item.item_name
 	copy_item.name = copy_item.item_name

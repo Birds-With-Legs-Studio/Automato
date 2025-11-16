@@ -1,20 +1,20 @@
 extends CharacterBody2D
 
 
-@export var speed = 40 # How fast the player will move (pixels/sec).
-var screen_size # Size of the game window.
-var ground
-var environment
-var camera
+@export var speed: int = 40 # How fast the player will move (pixels/sec).
+var screen_size: Vector2 # Size of the game window.
+var ground: TileMapLayer
+var environment: TileMapLayer
+var camera: Camera2D
 @export var inventory: Inventory
 @export var hotbar: Hotbar
-var rock = preload("res://src/items/rock.tscn")
+var rock: PackedScene = preload("res://src/items/rock.tscn")
 #0 = left, 1 = up, 2 = right, 3 = down
 #TODO: There's GOT to be a better way to do thi
 var direction : int
 
 
-func _ready():
+func _ready() -> void:
 	screen_size = get_viewport_rect().size
 	ground = get_node("../TileMap/TileMapLayer")
 	environment = get_node("../TileMap/TileMapLayer2")
@@ -23,7 +23,7 @@ func _ready():
 
 
 # Process player movement
-func _physics_process(_delta):
+func _physics_process(_delta: float) -> void:
 	# If an action animation is playing, don't move or change animation
 	#TODO maybe figure out a better way to do this bc running contains every frame is slowww
 	if($AnimatedSprite2D.is_playing() and not $AnimatedSprite2D.animation.contains("walk")):
@@ -56,13 +56,13 @@ func _physics_process(_delta):
 
 
 #Process mouse presses
-func _input(event):
+func _input(event: InputEvent) -> void:
 	#If it's a mouse event, process click
 	if event is InputEventMouseButton and event.pressed:
 		# TODO: This is kind of an unideal way to get mouse position. Figure out later
-		var place_vector = environment.local_to_map(camera.get_global_mouse_position())
+		var place_vector: Vector2i = environment.local_to_map(camera.get_global_mouse_position())
 		
-		var d_from_player = place_vector - environment.local_to_map(position)
+		var d_from_player: Vector2i = place_vector - environment.local_to_map(position)
 		# If clicked location is within 1 cell of player, change direction accordingly (prefer verical)
 		if int(d_from_player.length()) == 1:
 			if d_from_player.y != 0:
@@ -99,7 +99,7 @@ func _input(event):
 				environment.set_cell(place_vector, -1, Vector2(0,0), 0)
 				hotbar.update()
 
-func play_animation(animation):
+func play_animation(animation: String) -> void:
 	match direction:
 		0: 
 			$AnimatedSprite2D.animation = animation + "_right"
